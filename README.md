@@ -17,6 +17,7 @@ There are many resources available for learning memo.
 2. You can watch a [video tutorial](https://www.dropbox.com/scl/fi/c3jjup1lheowfppbz41zr/memo-live-tutorial.mp4?rlkey=ce7reeadff2nh2ktqh3tubbik&st=lai8yx1h&dl=0) that covers similar material. You can also check out a [talk given at LAFI '25](https://www.youtube.com/live/RLEFVgx2UWk?t=12500s) that offers a bigger-picture overview of memo.
 3. The [Handbook](./Handbook.pdf) is a complete reference for memo's syntactic constructs.
 4. This repository includes over a dozen classic examples of recursive reasoning models implemented in memo, which you can find in the [demo directory](./demo/).
+5. A minimal [simple example](./demo/simple_example.py) demonstrates how to define a short memo function that adds two values.
 6. I am happy to give a short hands-on tutorial on memo in your lab. Just email me to ask!
 
 You may also be looking for general resources on the theory behind memo modeling.
