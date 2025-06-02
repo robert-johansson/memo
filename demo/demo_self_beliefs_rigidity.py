@@ -7,27 +7,32 @@ class SelfBelief(IntEnum):
     UNLOVABLE = 1
     INCOMPETENT = 2
 
-class Rigidity(IntEnum):
-    FLEXIBLE = 0
-    RIGID = 1
-    VERY_RIGID = 2
-
 B = np.arange(len(SelfBelief))
+
+# Base confidences for each negative belief
+belief_probs = np.array([0.6, 0.25, 0.15])
+
+class Rigidity(IntEnum):
+    LOW = 0
+    MEDIUM = 1
+    HIGH = 2
+
+# Numerical rigidity levels (higher = beliefs weighted more sharply)
+rigidity_levels = np.array([0.5, 1.0, 2.0])
 R = np.arange(len(Rigidity))
 
-belief_probs = np.array([0.6, 0.25, 0.15])
-rigidity_probs = np.array([0.5, 0.35, 0.15])
+# Prior over rigidity choices (uniform here)
+rigidity_prior = np.array([1/3, 1/3, 1/3])
 
 @memo
-def self_beliefs_rigid[b: B, r: R]():
-    """Joint belief and rigidity distribution for the "self" agent."""
-    # Sample rigidity level first (hierarchical)
-    self: chooses(rigidity in R, wpp=rigidity_probs[rigidity])
-    weighted = belief_probs ** (1 + self.rigidity)
-    weighted = weighted / weighted.sum()
-    self: chooses(belief in B, wpp=weighted[belief])
-    self: thinks[ self: knows(belief) ]
-    return self[Pr[(self.belief == b) & (self.rigidity == r)]]
+def self_beliefs_rigidity[r: R, b: B]():
+    """Probability "self" holds belief ``b`` given rigidity ``r``."""
+    meta_self: chooses(rig in R, wpp=rigidity_prior[rig])
+    meta_self: thinks[
+        self: knows(rig),
+        self: chooses(belief in B, wpp=belief_probs ** rigidity_levels[rig])
+    ]
+    return meta_self[Pr[self.belief == b]]
 
 if __name__ == "__main__":
-    print(self_beliefs_rigid())
+    print(self_beliefs_rigidity())

@@ -14,8 +14,8 @@ belief_probs = np.array([0.6, 0.25, 0.15])
 
 @memo
 def self_beliefs[b: B]():
-    """Return the probability that "self" holds negative belief b."""
-    self: chooses(belief in B, wpp=belief_probs[belief])
+    """Return the probability that "self" holds negative belief ``b``."""
+    self: chooses(belief in B, wpp=belief_probs)
     self: thinks[ self: knows(belief) ]
     return self[Pr[self.belief == b]]
 
